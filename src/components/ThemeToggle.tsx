@@ -16,7 +16,7 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={handleToggle}
-      className="bg-secondary/10 hover:bg-secondary/20 text-foreground p-2 rounded-lg transition-all duration-200 flex items-center gap-2 cursor-pointer"
+      className="bg-secondary/10 hover:bg-secondary/20 text-[#E8EAEE] p-2 rounded-lg transition-all duration-200 flex items-center gap-2 cursor-pointer"
       title={`Mudar para tema ${theme === 'light' ? 'escuro' : 'claro'}`}
     >
       {theme === 'light' ? (

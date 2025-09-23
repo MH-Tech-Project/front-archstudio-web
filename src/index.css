@@ -17,6 +17,8 @@
   /* Tons de cinza */
   --gray: #9FA3AD;
   --gray-900: #34373D;
+
+  --black: #121417;
   
   /* Texto */
   --text-white: #E8EAEE;
@@ -45,6 +47,8 @@
   --gray: #6B7280;
   --gray-900: #F9FAFB;
   
+  --black: #E8EAEE;
+
   /* Texto */
   --text-white: #1A1D23;
   --foreground: #1A1D23;
@@ -75,4 +79,15 @@ body {
   margin: 0;
   min-height: 100vh;
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Personalização da cor de seleção de texto */
+::selection {
+  background-color: #EFA339;
+  color: #121417;
+}
+
+::-moz-selection {
+  background-color: #EFA339;
+  color: #121417;
 }
