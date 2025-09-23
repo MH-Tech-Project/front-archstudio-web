@@ -1,0 +1,78 @@
+/* Import da fonte Inter do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap');
+
+@import "tailwindcss";
+
+/* Configuração de tema dark (padrão) */
+:root {
+  /* Cores primárias */
+  --primary: #D4A853;
+  --primary-hover: #C49A47;
+  --secondary: #EFA339;
+  
+  /* Backgrounds */
+  --background: #121417;
+  --background-contrast: #E8EAED;
+  
+  /* Tons de cinza */
+  --gray: #9FA3AD;
+  --gray-900: #34373D;
+  
+  /* Texto */
+  --text-white: #E8EAEE;
+  --foreground: #E8EAEE;
+  
+  /* Cores complementares para elementos UI */
+  --card: #1B1D22;
+  --muted: #2A2F36;
+  --muted-foreground: #9FA3AD;
+  --border: #34373D;
+  --accent: #EFA339;
+}
+
+/* Configuração de tema light */
+.light {
+  /* Cores primárias (ajustadas para contraste no light) */
+  --primary: #B8941C;
+  --primary-hover: #A0821A;
+  --secondary: #D4881F;
+  
+  /* Backgrounds */
+  --background: #FFFFFF;
+  --background-contrast: #1A1D23;
+  
+  /* Tons de cinza (invertidos para light mode) */
+  --gray: #6B7280;
+  --gray-900: #F9FAFB;
+  
+  /* Texto */
+  --text-white: #1A1D23;
+  --foreground: #1A1D23;
+  
+  /* Cores complementares para elementos UI */
+  --card: #F8FAFC;
+  --muted: #F1F5F9;
+  --muted-foreground: #64748B;
+  --border: #E2E8F0;
+  --accent: #D4881F;
+}
+
+/* Configurações globais */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Inter';
+  line-height: 1.5;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
