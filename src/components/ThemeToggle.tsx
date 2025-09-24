@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { toggleTheme, getCurrentTheme } from '../utils/theme';
 
-const ThemeToggle = () => {
+const ThemeToggle = ({isFixedColor}:{isFixedColor:boolean}) => {
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
 
   useEffect(() => {
@@ -16,8 +16,9 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={handleToggle}
-      className="bg-secondary/10 hover:bg-secondary/20 text-[#E8EAEE] p-2 rounded-lg transition-all duration-200 flex items-center gap-2 cursor-pointer"
+      className="bg-secondary/10 hover:bg-secondary/20 text-foreground p-2 rounded-lg transition-all duration-200 flex items-center gap-2 cursor-pointer"
       title={`Mudar para tema ${theme === 'light' ? 'escuro' : 'claro'}`}
+      style={{color: isFixedColor ? '#E8EAEE' : undefined}}
     >
       {theme === 'light' ? (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
