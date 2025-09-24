@@ -30,6 +30,8 @@ export default {
           900: 'var(--gray-900)',
         },
         
+        black: 'var(--black)',
+
         // Textos
         foreground: {
           DEFAULT: 'var(--foreground)',
