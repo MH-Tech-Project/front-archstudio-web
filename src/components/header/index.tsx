@@ -17,7 +17,7 @@ export default function Header() {
 
     return(
         <header 
-            className={`w-full flex justify-around items-center mb-8 gap-52 py-4 border-b border-[#34373D] fixed top-0 z-999 transition-all duration-300 ${
+            className={`w-full flex md:justify-around justify-between items-center mb-8 gap-4 md:gap-52 py-4 px-4 border-b border-[#34373D] fixed top-0 z-999 transition-all duration-300 ${
                 isScrolled 
                     ? 'bg-card/60 backdrop-blur-lg' 
                     : ''
