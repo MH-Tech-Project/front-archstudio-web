@@ -1,6 +1,6 @@
-import { FiCheck } from "react-icons/fi";
 import Button from "../Button";
 import Title from "../Title";
+import BenefitList from "../BenefitList";
 
 export default function Hero(){
     return(
@@ -17,7 +17,7 @@ export default function Hero(){
                 <div className="max-w-4xl mx-auto text-center space-y-8">
                     <div className="space-y-4 animate-fade-in">
                         <Title 
-                            fontSize="text-7xl"
+                            className="text-4xl sm:text-3xl md:text-4xl lg:text-7xl"
                             beforeMark="Projete com"
                             markTitle="Excelência"
                         />
@@ -36,20 +36,7 @@ export default function Hero(){
                         </Button>
                     </div>
 
-                    <div className="mt-6 flex flex-col sm:flex-row gap-4 sm:gap-8 justify-center items-center">
-                        <div className="flex items-center gap-2">
-                            <FiCheck size={20} color="#EFA339"/>
-                            <p className="text-[#9FA3AD] font-medium text-sm">Teste grátis 30 dias</p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <FiCheck size={20} color="#EFA339"/>
-                            <p className="text-[#9FA3AD] font-medium text-sm"><span></span> Sem compromisso</p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <FiCheck size={20} color="#EFA339"/>
-                            <p className="text-[#9FA3AD] font-medium text-sm"><span></span> Suporte especializado</p>
-                        </div>
-                    </div>
+                    <BenefitList/>
                 </div>
             </div>
         </section>
