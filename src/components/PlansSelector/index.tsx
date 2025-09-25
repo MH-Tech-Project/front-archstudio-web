@@ -9,13 +9,13 @@ export default function PlansSelector(){
 
     const plansIndividual = [
         {
-            name: "Básico",
-            description: "Para quem está começando",
+            name: "Basic",
+            description: "Para arquitetos iniciantes",
             price: 29.90,
             benefits: [
-                "Até 5 projetos simultâneos", 
-                "Biblioteca básica de objetos", 
-                "Exportação em PDF", 
+                "5 projetos por mês", 
+                "Renderizações básicas", 
+                "2GB de armazenamento", 
                 "Suporte por email"
             ],
             recommended: false
@@ -23,25 +23,25 @@ export default function PlansSelector(){
         {
             name: "Standard",
             description: "Para profissionais estabelecidos",
-            price: 59,
+            price: 79,
             benefits: [
                 "Projetos ilimitados", 
-                "Biblioteca completa de objetos", 
+                "Renderizações HD", 
                 "Exportação em múltiplos formatos", 
+                "20GB de armazenamento",
                 "Suporte prioritário",
-                "Renderização 3D básica"
             ],
             recommended: true
         },
         {
             name: "Premium",
-            description: "Para escritórios de alta performance",
-            price: 99,
+            description: "Para arquitetos avançados",
+            price: 149,
             benefits: [
-                "Todos os recursos do Standard", 
-                "Renderização 3D avançada", 
-                "Colaboração em tempo real", 
-                "API personalizada",
+                "Tudo do Standard", 
+                "Renderizações 4K", 
+                "100GB de armazenamento", 
+                "IA para otimização",
                 "Suporte 24/7"
             ],
             recommended: false
@@ -50,39 +50,41 @@ export default function PlansSelector(){
 
     const plansBusiness = [
         {
-            name: "Team",
+            name: "Basic",
             description: "Para equipes pequenas",
             price: 149,
             benefits: [
                 "Até 10 usuários", 
-                "Gestão de projetos avançada", 
-                "Controle de versões", 
-                "Relatórios personalizados"
+                "Projetos colaborativos", 
+                "50GB compartilhados", 
+                "Controle de versões"
             ],
             recommended: false
         },
         {
-            name: "Enterprise",
-            description: "Para grandes escritórios",
+            name: "Standard",
+            description: "Para escritórios médios",
             price: 299,
             benefits: [
-                "Usuários ilimitados", 
-                "Integração com sistemas ERP", 
-                "Dashboard executivo", 
-                "Treinamento personalizado",
-                "Gerente de conta dedicado"
+                "15 usuários inclusos", 
+                "Gestão de projetos", 
+                "200GB compartilhados", 
+                "Relatórios avançados",
+                "Integrações CAD"
             ],
             recommended: true
         },
         {
-            name: "Custom",
-            description: "Soluções sob medida",
+            name: "Premium",
+            description: "Para grandes escritórios",
             price: 499,
             benefits: [
-                "Desenvolvimento personalizado", 
-                "Integração completa", 
-                "Suporte técnico dedicado", 
-                "SLA garantido"
+                "Usuários ilimitados", 
+                "Dashboard executivo", 
+                "1TB compartilhado", 
+                "API personalizada",
+                "Treinamento dedicado",
+                "Suporte 24/7"
             ],
             recommended: false
         }
