@@ -14,7 +14,8 @@ export default function Navigation({ isMobile = false, isScrolled = false, onIte
         onItemClick?.();
     };
 
-    const handleLinkClick = () => {
+    const handleLinkClick = (path: string) => {
+        navigate(path);
         onItemClick?.();
     };
 
@@ -36,22 +37,19 @@ export default function Navigation({ isMobile = false, isScrolled = false, onIte
             style={{ color: !isMobile && isScrolled ? '#E8EAEE' : undefined }}
         >
             <a 
-                href="#Plan" 
-                onClick={handleLinkClick}
+                onClick={() => handleLinkClick('/plans')}
                 className={linkClass}
             >
                 Planos
             </a>
             <a 
-                href="#About" 
-                onClick={handleLinkClick}
+                onClick={() =>handleLinkClick('/about')}
                 className={linkClass}
             >
                 Sobre Nós
             </a>
             <a 
-                href="#Help" 
-                onClick={handleLinkClick}
+                onClick={() => handleLinkClick('/help')}
                 className={linkClass}
             >
                 Ajuda
