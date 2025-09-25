@@ -1,6 +1,6 @@
 interface ButtonProps {
   children: React.ReactNode;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg' | 'full';
   variant?: 'primary' | 'secondary';
   onClick?: () => void;
   disabled?: boolean;
@@ -20,6 +20,7 @@ export default function Button({
     sm: 'px-4 py-2 text-sm',
     md: 'px-6 py-3 text-base',
     lg: 'px-4 py-3 text-sm md:px-8 md:py-4 md:text-lg',
+    full: '!w-full px-6 py-3 text-base'
   };
   
   const variants = {
@@ -51,7 +52,6 @@ export default function Button({
         transition-all
         duration-200
         cursor-pointer
-        md
       `}
     >
       {children}
