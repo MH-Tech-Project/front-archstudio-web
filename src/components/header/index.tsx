@@ -1,9 +1,14 @@
 import Logo from "../Logo";
 import ThemeToggle from "../ThemeToggle";
+import Navigation from "../Navigation";
 import { useState, useEffect } from "react";
+import { HiMenuAlt3, HiX } from "react-icons/hi";
 
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [showMobileMenu, setShowMobileMenu] = useState(false);
+    const [scrollPosition, setScrollPosition] = useState(0);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -15,9 +20,108 @@ export default function Header() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    // Função para scroll suave até o topo
+    const smoothScrollToTop = () => {
+        const startPosition = window.scrollY;
+        const duration = 300;
+        let start = 0;
+
+        const step = (timestamp: number) => {
+            if (!start) start = timestamp;
+            const progress = Math.min((timestamp - start) / duration, 1);
+            
+            // Easing ease-out
+            const ease = progress * (2 - progress);
+            
+            window.scrollTo(0, startPosition * (1 - ease));
+            
+            if (progress < 1) {
+                requestAnimationFrame(step);
+            } else {
+                // Quando terminar o scroll, trava a tela e mostra o menu
+                document.body.style.overflow = 'hidden';
+                document.body.style.position = 'fixed';
+                document.body.style.top = '0px';
+                document.body.style.width = '100%';
+                
+                // Delay para mostrar o menu após o scroll
+                setTimeout(() => {
+                    setShowMobileMenu(true);
+                }, 200);
+            }
+        };
+        
+        requestAnimationFrame(step);
+    };
+
+    // Função para scroll suave de volta à posição original
+    const smoothScrollToPosition = (targetPosition: number) => {
+        const startPosition = window.scrollY;
+        const distance = targetPosition - startPosition;
+        const duration = 300;
+        let start = 0;
+
+        const step = (timestamp: number) => {
+            if (!start) start = timestamp;
+            const progress = Math.min((timestamp - start) / duration, 1);
+            
+            const ease = progress * (2 - progress);
+            
+            window.scrollTo(0, startPosition + distance * ease);
+            
+            if (progress < 1) {
+                requestAnimationFrame(step);
+            }
+        };
+        
+        requestAnimationFrame(step);
+    };
+
+    const toggleMobileMenu = () => {
+        if (!isMobileMenuOpen) {
+            // Abrindo o menu
+            setScrollPosition(window.scrollY); // Salva posição atual
+            setIsMobileMenuOpen(true);
+            
+            if (window.scrollY > 0) {
+                // Se não estiver no topo, scrolla suavemente para o topo
+                smoothScrollToTop();
+            } else {
+                // Se já estiver no topo, apenas trava e mostra o menu
+                document.body.style.overflow = 'hidden';
+                document.body.style.position = 'fixed';
+                document.body.style.top = '0px';
+                document.body.style.width = '100%';
+                setShowMobileMenu(true);
+            }
+        } else {
+            // Fechando o menu
+            setShowMobileMenu(false);
+            setIsMobileMenuOpen(false);
+            
+            // Restaura o body
+            document.body.style.overflow = 'unset';
+            document.body.style.position = 'unset';
+            document.body.style.top = 'unset';
+            document.body.style.width = 'unset';
+            
+            // Volta para a posição original com delay
+            setTimeout(() => {
+                if (scrollPosition > 0) {
+                    smoothScrollToPosition(scrollPosition);
+                }
+            }, 50);
+        }
+    };
+
+    const closeMobileMenu = () => {
+        // Chama a mesma lógica do toggle quando está fechando
+        toggleMobileMenu();
+    };
+
     return(
         <header 
-            className={`w-full flex md:justify-around justify-between items-center mb-8 gap-4 md:gap-52 py-4 px-4 border-b border-[#34373D] fixed top-0 z-999 transition-all duration-300 ${
+            className={`w-full flex md:justify-around justify-between items-center mb-8 gap-4 md:gap-52 py-4 px-4 border-b border-[#34373D] fixed top-0 z-50 transition-all duration-300 ${
                 isScrolled 
                     ? 'bg-card/60 backdrop-blur-lg' 
                     : ''
@@ -25,15 +129,35 @@ export default function Header() {
             style={{ backgroundColor: isScrolled ? undefined : 'var(--background)' }}
         >
             <Logo fixedColor={isScrolled} />
-            <div className="flex items-center gap-16">
-                <nav className="hidden md:flex items-center gap-8 text-foreground" style={{ color: isScrolled ? '#E8EAEE' : undefined }}>
-                    <a href="#Plan" className="hover:underline text-base font-medium hover:text-[#E8EAEE] transition-colors">Planos</a>
-                    <a href="#About" className="hover:underline text-base font-medium hover:text-[#E8EAEE] transition-colors">Sobre Nós</a>
-                    <a href="#Help" className="hover:underline text-base font-medium hover:text-[#E8EAEE] transition-colors">Ajuda</a>
-                    <button className="bg-transparent text-foreground py-2 px-4 rounded-xl border border-foreground hover:bg-muted hover:text-[#E8EAEE] cursor-pointer">Login</button>
-                </nav>
+            
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center gap-16">
+                <Navigation isScrolled={isScrolled} />
                 <ThemeToggle isFixedColor={isScrolled} />
             </div>
+
+            {/* Mobile Menu Button */}
+            <div className="md:hidden flex items-center gap-4">
+                <ThemeToggle isFixedColor={isScrolled} />
+                <button
+                    onClick={toggleMobileMenu}
+                    className={` hover:text-[#EFA339] transition-colors p-2 ${isScrolled ? 'text-[#E8EAEE]' : 'text-foreground'}`}
+                    aria-label="Menu"
+                >
+                    {isMobileMenuOpen ? (
+                        <HiX size={24} />
+                    ) : (
+                        <HiMenuAlt3 size={24} />
+                    )}
+                </button>
+            </div>
+
+            {/* Mobile Menu Overlay */}
+            {isMobileMenuOpen && showMobileMenu && (
+                <div className="fixed inset-0 top-[73px] bg-background/95 backdrop-blur-lg z-40 md:hidden">
+                    <Navigation isMobile={true} onItemClick={closeMobileMenu} />
+                </div>
+            )}
         </header>
     )
 }
