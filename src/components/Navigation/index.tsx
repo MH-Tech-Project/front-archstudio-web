@@ -21,7 +21,7 @@ export default function Navigation({ isMobile = false, isScrolled = false, onIte
 
     const linkClass = isMobile 
         ? "text-xl font-medium text-[#E8EAEE] transition-colors"
-        : "hover:underline text-base font-medium hover:text-foreground transition-colors";
+        : "hover:underline text-base font-medium hover:text-foreground transition-colors cursor-pointer";
 
     const buttonClass = isMobile
         ? "bg-transparent text-foreground py-3 px-6 rounded-xl border border-[#E8EAEE] text-[#E8EAEE] transition-all text-xl font-medium"

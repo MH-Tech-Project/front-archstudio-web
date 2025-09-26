@@ -1,7 +1,13 @@
+import { useEffect } from "react";
 import Header from "../../components/Header";
 import PlansSelector from "../../components/PlansSelector";
 
 export default function Plans() {
+
+    useEffect(() =>{
+        window.document.title = "Planos | ArchStudio Pro";
+    },[])
+
     return(
         <div className="w-full min-h-screen flex flex-col justify-center items-center">
             <Header />
