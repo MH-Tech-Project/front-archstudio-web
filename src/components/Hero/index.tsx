@@ -1,8 +1,11 @@
 import Button from "../Button";
 import Title from "../Title";
 import BenefitList from "../BenefitList";
+import { useNavigate } from "react-router-dom";
 
 export default function Hero(){
+    const navigate = useNavigate();
+
     return(
         <section className="relative overflow-hidden bg-gradient-hero min-h-[90vh] flex items-center">
             <div className="absolute inset-0 blueprint-grid opacity-40" />
@@ -28,10 +31,10 @@ export default function Hero(){
                     </div>
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-slide-in">
-                        <Button size="lg" variant="primary">
+                        <Button size="lg" variant="primary" onClick={() => navigate('/signup')}>
                             <p>Começar Gratuitamente</p>
                         </Button>
-                        <Button size="lg" variant="secondary">
+                        <Button size="lg" variant="secondary" onClick={() => navigate('/plans')}>
                             <p>Saiba Mais</p>
                         </Button>
                     </div>
