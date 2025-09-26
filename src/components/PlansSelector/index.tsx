@@ -4,11 +4,27 @@ import PlansCard from "../PlansCard";
 
 type PlanType = 'individual' | 'business';
 
-export default function PlansSelector(){
+interface Plan {
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+    benefits: string[];
+    recommended: boolean;
+}
+
+interface PlansSelectorProps {
+    onPlanSelect?: (plan: Plan) => void;
+    selectedPlanId?: string | null;
+    selectionMode?: boolean; // true para modo seleção no Signup
+}
+
+export default function PlansSelector({ onPlanSelect, selectedPlanId, selectionMode = false }: PlansSelectorProps){
     const [selectedPlanType, setSelectedPlanType] = useState<PlanType>('individual');
 
     const plansIndividual = [
         {
+            id: 'individual-basic',
             name: "Basic",
             description: "Para arquitetos iniciantes",
             price: 29.90,
@@ -21,6 +37,7 @@ export default function PlansSelector(){
             recommended: false
         },
         {
+            id: 'individual-standard',
             name: "Standard",
             description: "Para profissionais estabelecidos",
             price: 79,
@@ -34,6 +51,7 @@ export default function PlansSelector(){
             recommended: true
         },
         {
+            id: 'individual-premium',
             name: "Premium",
             description: "Para arquitetos avançados",
             price: 149,
@@ -50,6 +68,7 @@ export default function PlansSelector(){
 
     const plansBusiness = [
         {
+            id: 'business-basic',
             name: "Basic",
             description: "Para equipes pequenas",
             price: 149,
@@ -62,6 +81,7 @@ export default function PlansSelector(){
             recommended: false
         },
         {
+            id: 'business-standard',
             name: "Standard",
             description: "Para escritórios médios",
             price: 299,
@@ -75,6 +95,7 @@ export default function PlansSelector(){
             recommended: true
         },
         {
+            id: 'business-premium',
             name: "Premium",
             description: "Para grandes escritórios",
             price: 499,
@@ -96,6 +117,12 @@ export default function PlansSelector(){
 
     const getCurrentPlans = () => {
         return selectedPlanType === 'individual' ? plansIndividual : plansBusiness;
+    };
+
+    const handlePlanSelect = (plan: Plan) => {
+        if (onPlanSelect) {
+            onPlanSelect(plan);
+        }
     };
     return(
         <div className="w-full flex flex-col gap-16 justify-center items-center">
@@ -124,11 +151,15 @@ export default function PlansSelector(){
                 {getCurrentPlans().map((plan, index) => (
                     <div key={index} className="flex-1 min-w-[340px] max-w-[320px]">
                         <PlansCard
+                            id={plan.id}
                             name={plan.name}
                             description={plan.description}
                             price={plan.price}
                             benefits={plan.benefits}
                             recommended={plan.recommended}
+                            onSelect={() => handlePlanSelect(plan)}
+                            isSelected={selectedPlanId === plan.id}
+                            selectionMode={selectionMode}
                         />
                     </div>
                 ))}
