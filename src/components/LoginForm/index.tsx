@@ -169,7 +169,7 @@ export default function LoginForm(){
                     <p>Entrar na conta</p>
                 </Button>
 
-                <p className=" text-sm text-[#9FA3AD]">Não tem uma conta? <span className="text-[#EFA339] underline cursor-pointer">Cadastre-se gratuitamente</span></p>
+                <p className=" text-sm text-[#9FA3AD]">Não tem uma conta? <span className="text-[#EFA339] underline cursor-pointer" onClick={() => navigate('/signup')}>Cadastre-se gratuitamente</span></p>
             </div>
         </div>
     )

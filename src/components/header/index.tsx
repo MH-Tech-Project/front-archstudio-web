@@ -3,8 +3,14 @@ import ThemeToggle from "../ThemeToggle";
 import Navigation from "../Navigation";
 import { useState, useEffect } from "react";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
+import { useNavigate } from "react-router-dom";
 
-export default function Header() {
+interface HeaderProps {
+    showButtonLogin?: boolean;
+}
+
+export default function Header({ showButtonLogin = false }: HeaderProps) {
+    const navigate = useNavigate();
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [showMobileMenu, setShowMobileMenu] = useState(false);
@@ -115,7 +121,6 @@ export default function Header() {
     };
 
     const closeMobileMenu = () => {
-        // Chama a mesma lógica do toggle quando está fechando
         toggleMobileMenu();
     };
 
@@ -129,35 +134,51 @@ export default function Header() {
             style={{ backgroundColor: isScrolled ? undefined : 'var(--background)' }}
         >
             <Logo fixedColor={isScrolled} />
+
+            {
+                showButtonLogin ? (
+                    <div className="flex justify-center items-center gap-4">
+                        <span className="hidden sm:block text-sm text-[#9FA3AD]">Já tem uma conta?</span>
+                        <button 
+                            onClick={() => navigate('/login')} 
+                            className='bg-transparent text-foreground text-sm py-2 px-4 rounded-xl border border-[#34373D] hover:opacity-80 cursor-pointer'
+                        >
+                            Fazer Login
+                        </button>
+                    </div>
+                ) : (
+                    <>
+                        <div className="hidden md:flex items-center gap-16">
+                            <Navigation isScrolled={isScrolled} />
+                            <ThemeToggle isFixedColor={isScrolled} />
+                        </div>
             
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-16">
-                <Navigation isScrolled={isScrolled} />
-                <ThemeToggle isFixedColor={isScrolled} />
-            </div>
-
-            {/* Mobile Menu Button */}
-            <div className="md:hidden flex items-center gap-4">
-                <ThemeToggle isFixedColor={isScrolled} />
-                <button
-                    onClick={toggleMobileMenu}
-                    className={` hover:text-[#EFA339] transition-colors p-2 ${isScrolled ? 'text-[#E8EAEE]' : 'text-foreground'}`}
-                    aria-label="Menu"
-                >
-                    {isMobileMenuOpen ? (
-                        <HiX size={24} />
-                    ) : (
-                        <HiMenuAlt3 size={24} />
-                    )}
-                </button>
-            </div>
-
-            {/* Mobile Menu Overlay */}
-            {isMobileMenuOpen && showMobileMenu && (
-                <div className="fixed inset-0 top-[73px] bg-background/95 backdrop-blur-lg z-40 md:hidden">
-                    <Navigation isMobile={true} onItemClick={closeMobileMenu} />
-                </div>
-            )}
+    
+                        <div className="md:hidden flex items-center gap-4">
+                            <ThemeToggle isFixedColor={isScrolled} />
+                            <button
+                                onClick={toggleMobileMenu}
+                                className={` hover:text-[#EFA339] transition-colors p-2 ${isScrolled ? 'text-[#E8EAEE]' : 'text-foreground'}`}
+                                aria-label="Menu"
+                            >
+                                {isMobileMenuOpen ? (
+                                    <HiX size={24} />
+                                ) : (
+                                    <HiMenuAlt3 size={24} />
+                                )}
+                            </button>
+                        </div>
+            
+                        {/* Mobile Menu Overlay */}
+                        {isMobileMenuOpen && showMobileMenu && (
+                            <div className="fixed inset-0 top-[73px] bg-background/95 backdrop-blur-lg z-40 md:hidden">
+                                <Navigation isMobile={true} onItemClick={closeMobileMenu} />
+                            </div>
+                        )}
+                    </>
+                )
+            }
+            
         </header>
     )
 }

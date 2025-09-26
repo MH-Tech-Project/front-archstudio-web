@@ -12,13 +12,12 @@
   
   /* Backgrounds */
   --background: #121417;
-  --background-contrast: #E8EAED;
+  --background-contrast: #34373D;
   
   /* Tons de cinza */
   --gray: #9FA3AD;
   --gray-900: #34373D;
 
-  --black: #121417;
   
   /* Texto */
   --text-white: #E8EAEE;
@@ -41,13 +40,12 @@
   
   /* Backgrounds */
   --background: #FFFFFF;
-  --background-contrast: #1A1D23;
+  --background-contrast: #F9FAFB;
   
   /* Tons de cinza (invertidos para light mode) */
   --gray: #6B7280;
   --gray-900: #F9FAFB;
   
-  --black: #E8EAEE;
 
   /* Texto */
   --text-white: #1A1D23;

@@ -30,7 +30,7 @@ export default {
           900: 'var(--gray-900)',
         },
         
-        black: 'var(--black)',
+        'background-contrast': 'var(--background-contrast)',
 
         // Textos
         foreground: {
