@@ -6,6 +6,7 @@ import Input from "../Input";
 import Button from "../Button";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
+import { useAuth } from "../../hooks/useAuth";
 
 const loginSchema = z.object({
     email: z
@@ -21,12 +22,14 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginForm(){
     const navigate = useNavigate();
+    const { login, isLoading: authLoading } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [rememberMe, setRememberMe] = useState(false);
     const [errors, setErrors] = useState<{
         email?: string;
         password?: string;
+        general?: string;
     }>({});
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -68,31 +71,22 @@ export default function LoginForm(){
 
     const handleSubmit = async () => {
         setIsSubmitting(true);
+        setErrors({}); // Limpar erros anteriores
         
         try {
             const validatedData = loginSchema.parse({ email, password });
-            setErrors({});
             
-            console.log('Tentativa de login para:', validatedData.email);
+            // Usar o método login do AuthContext
+            await login(validatedData);
             
-            // Simula delay da API
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            const loginSuccess = false; 
-
-            if (loginSuccess) {
-                // Login bem-sucedido
-                // navigate('/dashboard');
-                console.log('Login realizado com sucesso!');
-            } else {
-                // Login falhou - mensagem genérica por segurança
-                setErrors({
-                    email: "Email ou senha incorretos",
-                });
-            }
+            // Login bem-sucedido - redirecionar para dashboard
+            console.log('Login realizado com sucesso!');
+            navigate('/dashboard'); // ou para onde quiser redirecionar
             
         } catch (error) {
             if (error instanceof z.ZodError) {
-                const fieldErrors: { email?: string; password?: string } = {};
+                // Erros de validação do zod
+                const fieldErrors: { email?: string; password?: string; general?: string } = {};
                 error.issues.forEach((issue) => {
                     if (issue.path[0]) {
                         fieldErrors[issue.path[0] as keyof LoginFormData] = issue.message;
@@ -100,9 +94,20 @@ export default function LoginForm(){
                 });
                 setErrors(fieldErrors);
             } else {
-                setErrors({
-                    email: "Erro interno. Tente novamente mais tarde.",
-                });
+                // Erros de autenticação da API
+                const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido';
+                
+                // Se for erro específico de credenciais, mostrar no campo email
+                if (errorMessage.includes('incorretos') || errorMessage.includes('inválidos')) {
+                    setErrors({
+                        email: errorMessage,
+                    });
+                } else {
+                    // Outros erros mostrar como erro geral
+                    setErrors({
+                        general: errorMessage,
+                    });
+                }
             }
         } finally {
             setIsSubmitting(false);
@@ -120,6 +125,13 @@ export default function LoginForm(){
                 - Rate limiting deve ser implementado no backend
             */}
             <div className="w-full flex flex-col gap-6">
+                {/* Mensagem de erro geral */}
+                {errors.general && (
+                    <div className="w-full p-3 bg-[#B33F00]/10 border border-[#B33F00]/20 rounded-lg">
+                        <p className="text-[#B33F00] text-sm">{errors.general}</p>
+                    </div>
+                )}
+
                 <div className="w-full">
                     <Input
                         label="Email"
@@ -164,9 +176,9 @@ export default function LoginForm(){
                 <Button 
                     size="full" 
                     onClick={handleSubmit}
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || authLoading}
                 >
-                    <p>Entrar na conta</p>
+                    <p>{isSubmitting ? 'Entrando...' : 'Entrar na conta'}</p>
                 </Button>
 
                 <p className=" text-sm text-[#9FA3AD]">Não tem uma conta? <span className="text-[#EFA339] underline cursor-pointer" onClick={() => navigate('/signup')}>Cadastre-se gratuitamente</span></p>
