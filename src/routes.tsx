@@ -4,6 +4,8 @@ import Login from './pages/Login'
 import Plans from './pages/Plans'
 import Signup from './pages/Signup'
 import Dashboard from './pages/Dashboard'
+import ResetPassword from './pages/ResetPassword'
+import ResetPasswordConfirm from './pages/ResetPasswordConfirm'
 
 export const router = createBrowserRouter([
   {
@@ -22,8 +24,17 @@ export const router = createBrowserRouter([
     path: '/signup',
     element: <Signup />,
   },
-   {
+  {
     path: '/dashboard',
     element: <Dashboard />,
+    
+  },
+  {
+    path: '/reset-password',
+    element: <ResetPassword />,
+  },
+  {
+    path: '/reset-password/:token',
+    element: <ResetPasswordConfirm />,
   }
 ])

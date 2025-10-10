@@ -14,3 +14,8 @@ export type createAccountDTO = {
     planId?: string
     roleId: number
 }
+
+export type ResetPasswordRequestDTO ={
+    token: string
+    newPassword: string
+}

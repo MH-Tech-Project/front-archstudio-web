@@ -168,7 +168,7 @@ export default function LoginForm(){
                         id="remember-me"
                     />
 
-                    <p className="text-sm font-light text-[#EFA339] underline cursor-pointer">Esqueceu a senha?</p>
+                    <p className="text-sm font-light text-[#EFA339] underline cursor-pointer" onClick={() => navigate('/reset-password')}>Esqueceu a senha?</p>
                 </div>
             </div>
 
