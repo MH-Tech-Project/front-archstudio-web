@@ -164,7 +164,7 @@ export default function SignupForm({ selectedPlan, onBack }: SignupFormProps) {
             })
 
             if(response && response.user){
-                navigate('/dashboard');
+                navigate('/login');
             }
             
         } catch (error) {
