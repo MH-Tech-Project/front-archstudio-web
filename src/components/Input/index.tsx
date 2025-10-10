@@ -18,7 +18,7 @@ export default function Input(props: InputProps){
                     placeholder={props.placeholder}
                     value={props.value}
                     onChange={props.onChange}
-                    className=" placeholder:text-[#34373D] focus:outline-none"
+                    className=" w-full placeholder:text-[#34373D] focus:outline-none"
                 />
             </div>
         </div>

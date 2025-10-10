@@ -3,6 +3,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Plans from './pages/Plans'
 import Signup from './pages/Signup'
+import Dashboard from './pages/Dashboard'
 
 export const router = createBrowserRouter([
   {
@@ -20,5 +21,9 @@ export const router = createBrowserRouter([
   {
     path: '/signup',
     element: <Signup />,
+  },
+   {
+    path: '/dashboard',
+    element: <Dashboard />,
   }
 ])
