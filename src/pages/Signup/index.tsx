@@ -98,29 +98,25 @@ export default function Signup() {
     }, [location]);
 
     const handlePlanSelection = (plan: any) => {
-        // Adicionar o tipo baseado no plano selecionado
-        const planWithType = {
-            ...plan,
-            type: plan.id.includes('individual') ? 'individual' as const : 'business' as const
-        };
-        setSelectedPlan(planWithType);
+        if (plan === null) {
+            // Deseleção - remove o plano selecionado
+            setSelectedPlan(null);
+        } else {
+            // Seleção - adicionar o tipo baseado no plano selecionado
+            const planWithType = {
+                ...plan,
+                type: plan.id.includes('individual') ? 'individual' as const : 'business' as const
+            };
+            setSelectedPlan(planWithType);
+        }
     };
 
     const handleContinue = () => {
-        if (selectedPlan) {
-            setSteps(2);
-        }
+        setSteps(2);
     };
 
     const handleBackToPlans = () => {
         setSteps(1);
-    };
-
-    const handleSignupSubmit = (formData: any) => {
-        console.log('Cadastro completo:', { 
-            plan: selectedPlan, 
-            userData: formData 
-        });
     };
 
     const renderStep = () => {
@@ -144,35 +140,33 @@ export default function Signup() {
                                 selectionMode={true}
                             />
                             
-                            {/* Botão Continuar */}
-                            {selectedPlan && (
-                                <div className="flex justify-center mt-8">
-                                    <div className="w-3/4 md:w-1/3">
-                                        <Button 
-                                            size="full"
-                                            onClick={handleContinue}
-                                        >
-                                            <div className="flex justify-center items-center gap-4">    
-                                                <p>Continuar</p>
-                                                <FiArrowRight size={20} />
-                                            </div>
-                                        </Button>
-                                    </div>
+                            
+                            <div className="flex justify-center mt-8">
+                                <div className="w-3/4 md:w-1/3">
+                                    <Button 
+                                        size="full"
+                                        onClick={handleContinue}
+                                    >
+                                        <div className="flex justify-center items-center gap-4">    
+                                            {selectedPlan ? <p>Continuar</p> : <p>Seguir com plano gratuito</p>}
+                                            <FiArrowRight size={20} />
+                                        </div>
+                                    </Button>
                                 </div>
-                            )}
+                            </div>
+                            
                         </div>
                     </div>
                 );
             case 2:
-                return selectedPlan ? (
+                return (
                     <div className="w-full flex justify-center items-center">
                         <SignupForm 
                             selectedPlan={selectedPlan}
-                            onSubmit={handleSignupSubmit}
                             onBack={handleBackToPlans}
                         />
                     </div>
-                ) : null;
+                )
             default:
                 return null;
         }

@@ -14,9 +14,9 @@ interface Plan {
 }
 
 interface PlansSelectorProps {
-    onPlanSelect?: (plan: Plan) => void;
+    onPlanSelect?: (plan: Plan | null) => void;
     selectedPlanId?: string | null;
-    selectionMode?: boolean; // true para modo seleção no Signup
+    selectionMode?: boolean;
 }
 
 export default function PlansSelector({ onPlanSelect, selectedPlanId, selectionMode = false }: PlansSelectorProps){
@@ -121,7 +121,8 @@ export default function PlansSelector({ onPlanSelect, selectedPlanId, selectionM
 
     const handlePlanSelect = (plan: Plan) => {
         if (onPlanSelect) {
-            onPlanSelect(plan);
+            const newSelectedPlan = selectedPlanId === plan.id ? null : plan;
+            onPlanSelect(newSelectedPlan);
         }
     };
     return(

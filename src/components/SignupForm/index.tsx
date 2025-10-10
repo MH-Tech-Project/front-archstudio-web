@@ -6,6 +6,7 @@ import Input from "../Input";
 import Button from "../Button";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
+import { createAccount } from "../../api/user.api";
 
 const signupSchema = z.object({
     name: z
@@ -47,12 +48,11 @@ interface Plan {
 }
 
 interface SignupFormProps {
-    selectedPlan: Plan;
-    onSubmit?: (data: SignupFormData) => void;
+    selectedPlan: Plan | null;
     onBack?: () => void;
 }
 
-export default function SignupForm({ selectedPlan, onSubmit, onBack }: SignupFormProps) {
+export default function SignupForm({ selectedPlan, onBack }: SignupFormProps) {
     const navigate = useNavigate();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -155,20 +155,17 @@ export default function SignupForm({ selectedPlan, onSubmit, onBack }: SignupFor
             const validatedData = signupSchema.parse(formData);
             setErrors({});
             
-            console.log('Dados de cadastro:', { 
-                ...validatedData, 
-                selectedPlan: selectedPlan 
-            });
-            
-            // Simula delay da API
-            await new Promise(resolve => setTimeout(resolve, 1500));
-            
-            if (onSubmit) {
-                onSubmit(validatedData);
+       
+            const response = await createAccount({
+                email: validatedData.email,
+                name: validatedData.name,
+                password: validatedData.password,
+                roleId: 1
+            })
+
+            if(response && response.user){
+                navigate('/dashboard');
             }
-            
-            // Exemplo: redirecionar após cadastro bem-sucedido
-            // navigate('/welcome');
             
         } catch (error) {
             if (error instanceof z.ZodError) {
@@ -199,14 +196,15 @@ export default function SignupForm({ selectedPlan, onSubmit, onBack }: SignupFor
 
     return (
         <div className="w-full md:w-3/4 lg:w-2/5 bg-background flex flex-col justify-center items-center px-4 gap-8 rounded-lg">
+           
             <div className="w-full p-4 border border-[#34373D] rounded-lg bg-background-contrast">
                 <div className="flex justify-between items-center">
                     <div>
-                        <h3 className="text-foreground font-semibold">{selectedPlan.name}</h3>
-                        <p className="text-[#9FA3AD] text-sm">{selectedPlan.type === 'individual' ? 'Individual' : 'Empresarial'}</p>
+                        <h3 className="text-foreground font-semibold">{selectedPlan ? selectedPlan.name : 'Plano Gratuito'}</h3>
+                        <p className="text-[#9FA3AD] text-sm">{selectedPlan ? (selectedPlan.type === 'individual' ? 'Individual' : 'Empresarial') : ''}</p>
                     </div>
                     <div className="text-right">
-                        <p className="text-foreground font-bold">R$ {selectedPlan.price.toFixed(0)}/mês</p>
+                        <p className="text-foreground font-bold">R$ {selectedPlan ? selectedPlan.price.toFixed(0) : 0}/mês</p>
                         <button 
                             onClick={onBack}
                             className="text-[#EFA339] text-sm underline hover:no-underline cursor-pointer"
@@ -216,6 +214,7 @@ export default function SignupForm({ selectedPlan, onSubmit, onBack }: SignupFor
                     </div>
                 </div>
             </div>
+              
 
             {/* Formulário */}
             <div className="w-full flex flex-col gap-6 border border-[#34373D] bg-background-contrast px-4 sm:px-6 py-4 rounded-lg">
@@ -225,7 +224,7 @@ export default function SignupForm({ selectedPlan, onSubmit, onBack }: SignupFor
                         Seus dados pessoais
                     </h1>
                     <p className="text-base text-[#9FA3AD] font-normal text-center">
-                        Complete seu cadastro para o plano {selectedPlan.name}
+                        Complete seu cadastro para o plano {selectedPlan ? selectedPlan.name : 'Plano Gratuito'}
                     </p>
                 </div>
 
@@ -264,6 +263,7 @@ export default function SignupForm({ selectedPlan, onSubmit, onBack }: SignupFor
                         placeholder="(11) 99999-9999"
                         value={formatPhone(phone)}
                         onChange={handlePhoneChange}
+                        propsInput={{ maxLength: 15 }}
                         icon={<FiPhone color="#9FA3AD" size={18}/>}
                     />
                     {errors.phone && (
