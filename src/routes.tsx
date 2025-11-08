@@ -6,6 +6,7 @@ import Signup from './pages/Signup'
 import Dashboard from './pages/Dashboard'
 import ResetPassword from './pages/ResetPassword'
 import ResetPasswordConfirm from './pages/ResetPasswordConfirm'
+import AppLayout from './layouts/AppLayout'
 
 export const router = createBrowserRouter([
   {
@@ -25,16 +26,20 @@ export const router = createBrowserRouter([
     element: <Signup />,
   },
   {
-    path: '/dashboard',
-    element: <Dashboard />,
-    
-  },
-  {
     path: '/reset-password',
     element: <ResetPassword />,
   },
   {
     path: '/reset-password/:token',
     element: <ResetPasswordConfirm />,
+  },
+  {
+    element: <AppLayout />,
+    children:[
+      {
+        path: '/dashboard',
+        element: <Dashboard />,
+      },
+    ]
   }
 ])
