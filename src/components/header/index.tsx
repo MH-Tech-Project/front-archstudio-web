@@ -4,6 +4,7 @@ import Navigation from "../Navigation";
 import { useState, useEffect } from "react";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
+import { routes } from "../../routes";
 
 interface HeaderProps {
     showButtonLogin?: boolean;
@@ -133,7 +134,7 @@ export default function Header({ showButtonLogin = false }: HeaderProps) {
             }`}
             style={{ backgroundColor: isScrolled ? undefined : 'var(--background)' }}
         >
-            <Logo fixedColor={isScrolled} />
+            <Logo redirectTo={routes.home} fixedColor={isScrolled} />
 
             {
                 showButtonLogin ? (
