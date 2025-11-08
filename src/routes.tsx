@@ -14,9 +14,13 @@ export const routes = {
   login: '/login',
   signup: '/signup',
   plans: '/plans',
-  dashboard: '/dashboard',
   resetPassword: '/reset-password',
   resetPasswordConfirm: '/reset-password/:token',
+  dashboard: '/dashboard',
+  project: '/projects',
+  settings: '/settings',
+  meetings: '/meetings',
+  configurations: '/configurations',
 } as const
 
 export type AppRouteList = typeof routes
