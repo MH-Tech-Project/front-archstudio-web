@@ -16,6 +16,7 @@ interface SelectProps<T = string> {
     value?: T;
     disabled?: boolean;
     error?: string;
+    className?: string;
 }
 
 export function Select<T = string>({ 
@@ -26,7 +27,8 @@ export function Select<T = string>({
     onChange, 
     value,
     disabled = false,
-    error
+    error,
+    className,
 }: SelectProps<T>) {
     const [isOpen, setIsOpen] = useState(false);
     const selectRef = useRef<HTMLDivElement>(null);
@@ -82,6 +84,7 @@ export function Select<T = string>({
                         ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:border-[#EFA339]/50'}
                         ${error ? 'border-[#B33F00]' : 'border-[#34373D]'}
                         ${isOpen ? 'border-[#EFA339]' : ''}
+                        ${className ?? ''}
                     `}
                 >
                     <div className="flex items-center gap-2 flex-1 min-w-0">
@@ -101,8 +104,8 @@ export function Select<T = string>({
 
                 {/* Dropdown Options */}
                 {isOpen && (
-                    <div className="absolute z-50 w-full mt-2 bg-background border border-[#34373D] rounded-lg shadow-lg overflow-hidden">
-                        <div className="max-h-60 overflow-y-auto">
+                    <div className="absolute z-50 w-full mt-2 bg-[#121417] border border-[#34373D] rounded-lg shadow-lg overflow-hidden">
+                        <div className="max-h-40 overflow-y-auto">
                             {options.map((option, index) => {
                                 const isSelected = option.value === value;
                                 
