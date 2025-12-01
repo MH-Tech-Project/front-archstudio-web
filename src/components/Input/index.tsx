@@ -12,7 +12,7 @@ export default function Input(props: InputProps){
     return(
         <div className="w-full flex flex-col gap-2">
             <span className="text-sm font-medium text-foreground">{props.label}</span>
-            <div className="w-full p-3 rounded-lg bg-background border border-[#34373D] text-foreground flex items-center gap-4">
+            <div className="w-full p-3 rounded-lg bg-[#121417] border border-[#34373D] text-foreground flex items-center gap-4">
                 {props.icon && <div>{props.icon}</div>}
                 <input 
                     type={props.type}
