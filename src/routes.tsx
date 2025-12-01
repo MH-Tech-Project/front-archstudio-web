@@ -8,6 +8,8 @@ import Dashboard from './pages/Dashboard'
 import ResetPassword from './pages/ResetPassword'
 import ResetPasswordConfirm from './pages/ResetPasswordConfirm'
 import AppLayout from './layouts/AppLayout'
+import PrivateRoute from './components/PrivateRoute'
+import PublicOnlyRoute from './components/PublicOnlyRoute'
 
 export const routes = {
   home: '/',
@@ -38,7 +40,11 @@ export const router = createBrowserRouter([
   },
   {
     path: routes.login,
-    element: <Login />,
+    element: (
+      <PublicOnlyRoute>
+        <Login />
+      </PublicOnlyRoute>
+    ),
   },
   {
     path: routes.plans,
@@ -46,18 +52,34 @@ export const router = createBrowserRouter([
   },
   {
     path: routes.signup,
-    element: <Signup />,
+    element: (
+      <PublicOnlyRoute>
+        <Signup />
+      </PublicOnlyRoute>
+    ),
   },
   {
     path: routes.resetPassword,
-    element: <ResetPassword />,
+    element: (
+      <PublicOnlyRoute>
+        <ResetPassword />
+      </PublicOnlyRoute>
+    ),
   },
   {
     path: routes.resetPasswordConfirm,
-    element: <ResetPasswordConfirm />,
+    element: (
+      <PublicOnlyRoute>
+        <ResetPasswordConfirm />
+      </PublicOnlyRoute>
+    ),
   },
   {
-    element: <AppLayout />,
+    element: (
+      <PrivateRoute>
+        <AppLayout />
+      </PrivateRoute>
+    ),
     children:[
       {
         path: routes.dashboard,
