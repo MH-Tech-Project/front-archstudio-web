@@ -174,6 +174,7 @@ export function ProjectForm({ data, onChange, disabled = false }: ProjectFormPro
                             value={data.projectType}
                             onChange={handleSelectChange('projectType')}
                             disabled={disabled}
+                            className="!bg-[#121417]"
                         />
                         <Select 
                             label="Status" 
@@ -182,6 +183,7 @@ export function ProjectForm({ data, onChange, disabled = false }: ProjectFormPro
                             value={data.projectStatus}
                             onChange={handleSelectChange('projectStatus')}
                             disabled={disabled}
+                            className="!bg-[#121417]"
                         />
                         <Input 
                             label="Área Total (m²)"

@@ -32,7 +32,7 @@ export default function Checkbox({ label, checked = false, onChange, id }: Check
                         w-4 h-4 rounded-sm border-2 flex items-center justify-center transition-all duration-200 cursor-pointer
                         ${isChecked 
                             ? 'bg-[#EFA339] border-[#EFA339]' 
-                            : 'bg-transparent border-[#000000] hover:border-[#EFA339]'
+                            : 'bg-transparent border-[#34373D] hover:border-[#EFA339]'
                         }
                     `}
                 >

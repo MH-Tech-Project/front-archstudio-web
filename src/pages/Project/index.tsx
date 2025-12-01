@@ -2,6 +2,9 @@ import { useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { HeaderProject } from "../../components/HeaderProject"
 import { ProjectForm, emptyProjectFormData, type ProjectFormData } from "../../components/ProjectForm";
+import { ProjectPhases } from "../../components/ProjectPhases";
+import { PHASES_MOCK } from "../../utils/project";
+import { PhaseType } from "../../types/project";
 
 export default function Project() {
     const { id } = useParams<{ id: string }>()
@@ -107,6 +110,11 @@ export default function Project() {
                 data={formData}
                 onChange={setFormData}
                 disabled={isSaving}
+            /> 
+
+            <ProjectPhases 
+                projectStartDate="2025-12-01"
+                initialPhases={PHASES_MOCK.filter(phase => phase.phaseType === PhaseType.PROJECT)}
             /> 
         </div>
     )
