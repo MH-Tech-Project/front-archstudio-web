@@ -37,20 +37,21 @@ export function CardPhase({
 
     const formatDate = (date: string) => {
         if (!date) return "";
-        const d = new Date(date);
+        const [year, month, day] = date.split('-').map(Number);
+        const d = new Date(year, month - 1, day);
         return d.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
     };
 
     const formatDateFull = (date: string) => {
         if (!date) return "";
-        const d = new Date(date);
+        const [year, month, day] = date.split('-').map(Number);
+        const d = new Date(year, month - 1, day);
         return d.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric" });
     };
 
     const formatDateInput = (date: string) => {
         if (!date) return "";
-        const d = new Date(date);
-        return d.toISOString().split('T')[0];
+        return date;
     };
 
     const handleAddMilestone = () => {

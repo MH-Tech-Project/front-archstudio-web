@@ -7,9 +7,13 @@ export const formatDate = (date: string | Date) => {
 };
 
 export const addWeeks = (dateStr: string, weeks: number): string => {
-    const date = new Date(dateStr);
+    const [year, month, day] = dateStr.split('-').map(Number);
+    const date = new Date(year, month - 1, day);
     date.setDate(date.getDate() + (weeks * 7));
-    return date.toISOString().split('T')[0];
+    const newYear = date.getFullYear();
+    const newMonth = String(date.getMonth() + 1).padStart(2, '0');
+    const newDay = String(date.getDate()).padStart(2, '0');
+    return `${newYear}-${newMonth}-${newDay}`;
 };
 
 export const calculatePhaseEndDate = (startDate: string, weeks: number): string => {

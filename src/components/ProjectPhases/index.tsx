@@ -23,7 +23,6 @@ export function ProjectPhases({
         onPhasesChange?.(newPhases);
     };
 
-    // Calcular timeline das fases (memoizado para performance)
     const timeline = useMemo(() => 
         calculatePhasesTimeline(phases, projectStartDate),
         [phases, projectStartDate]
