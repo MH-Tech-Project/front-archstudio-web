@@ -2,6 +2,7 @@ import { routes } from "../../routes";
 import { AppNav } from "../AppNav";
 import { Container } from "../Container";
 import Logo from "../Logo";
+import { PhotoProfile } from "../PhotoProfile";
 
 export function AppHeader() {
     return(
@@ -10,7 +11,11 @@ export function AppHeader() {
                 <div className="flex items-center justify-between w-full">
                     <Logo  redirectTo={routes.dashboard}/>
 
-                    <AppNav />
+                    <div className="flex justify-center items-center gap-8">
+                        <AppNav />
+
+                       <PhotoProfile />
+                    </div>
                 </div>
             </Container>
         </header>
