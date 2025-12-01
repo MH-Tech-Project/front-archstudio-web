@@ -17,7 +17,7 @@ export default function Button({
 }: ButtonProps) {
   
   const sizes = {
-    sm: 'px-4 py-2 text-sm',
+    sm: 'px-3 py-3 text-sm font-medium',
     md: 'px-6 py-3 text-base',
     lg: 'px-4 py-3 text-sm md:px-8 md:py-4 md:text-lg',
     full: '!w-full px-6 py-3 text-base'

@@ -10,6 +10,7 @@ import ResetPasswordConfirm from './pages/ResetPasswordConfirm'
 import AppLayout from './layouts/AppLayout'
 import PrivateRoute from './components/PrivateRoute'
 import PublicOnlyRoute from './components/PublicOnlyRoute'
+import Project from './pages/Project'
 
 export const routes = {
   home: '/',
@@ -19,7 +20,8 @@ export const routes = {
   resetPassword: '/reset-password',
   resetPasswordConfirm: '/reset-password/:token',
   dashboard: '/dashboard',
-  project: '/projects',
+  projects: '/projects',
+  project: '/project/:id',
   settings: '/settings',
   meetings: '/meetings',
   configurations: '/configurations',
@@ -85,6 +87,10 @@ export const router = createBrowserRouter([
         path: routes.dashboard,
         element: <Dashboard />,
       },
+      {
+        path: routes.project,
+        element: <Project />,
+      }
     ]
   }
 ])
