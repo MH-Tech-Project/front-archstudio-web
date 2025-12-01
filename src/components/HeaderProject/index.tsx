@@ -7,13 +7,14 @@ interface HeaderProjectProps {
     projectType: string;
     clientName: string;
     projectStatus: string;
-    currentVersion: { id: number; date: string; author: string };
-    versions: Array<{ id: number; date: string; author: string }>;
+    currentVersion?: { id: number; date: string; author: string };
+    versions?: Array<{ id: number; date: string; author: string }>;
     changeVersion: (versionId: string) => void;
     saveProject: () => void;
+    isSaving?: boolean;
 }
 
-export function HeaderProject({ title, projectType, clientName, projectStatus, currentVersion, versions, changeVersion, saveProject }: HeaderProjectProps) {
+export function HeaderProject({ title, projectType, clientName, projectStatus, currentVersion, versions = [], changeVersion, saveProject, isSaving = false }: HeaderProjectProps) {
     return(
         <header className="w-full h-20 bg-background flex items-center justify-between">
             <div className="flex flex-col gap-4">
@@ -30,10 +31,10 @@ export function HeaderProject({ title, projectType, clientName, projectStatus, c
             </div>
             <div className="flex items-center justify-center gap-4">
                 {
-                    versions && versions.length > 0 && (
+                    versions && versions.length > 0 && currentVersion && (
                         <Select
                             icon={MdHistory}
-                            options={versions?.map(version => ({ label: `Versão ${version.id} - ${version.date}`, value: version.id.toString() }))}
+                            options={versions.map(version => ({ label: `Versão ${version.id} - ${version.date}`, value: version.id.toString() }))}
                             placeholder={`Versão ${currentVersion.id} - ${currentVersion.date}`}
                             value={currentVersion.id.toString()}
                             onChange={changeVersion}
@@ -41,10 +42,10 @@ export function HeaderProject({ title, projectType, clientName, projectStatus, c
                     )
                 }
                 <div className="w-full">
-                    <Button size="sm" onClick={saveProject}>
+                    <Button size="sm" onClick={saveProject} disabled={isSaving}>
                         <div className="flex items-center gap-2">
                             <MdSave size={20} />
-                            <p>Salvar alterações</p>
+                            <p>{isSaving ? "Salvando..." : "Salvar alterações"}</p>
                         </div>
                     </Button>
                 </div>

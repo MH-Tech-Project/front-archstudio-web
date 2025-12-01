@@ -1,10 +1,9 @@
-import { useState } from "react";
 import { Box } from "../Box";
 import Input from "../Input";
 import { Select, type SelectOption } from "../Select";
 import Textarea from "../Textarea";
 
-interface ProjectFormData {
+export interface ProjectFormData {
     clientName: string;
     clientEmail: string;
     clientPhone: string;
@@ -23,7 +22,7 @@ interface ProjectFormData {
     parkingSpaces: string;
 }
 
-const projectTypeOptions: SelectOption[] = [
+export const projectTypeOptions: SelectOption[] = [
     { label: "Residencial", value: "residential" },
     { label: "Comercial", value: "commercial" },
     { label: "Industrial", value: "industrial" },
@@ -33,7 +32,7 @@ const projectTypeOptions: SelectOption[] = [
     { label: "Paisagismo", value: "landscape" },
 ];
 
-const projectStatusOptions: SelectOption[] = [
+export const projectStatusOptions: SelectOption[] = [
     { label: "Briefing", value: "briefing" },
     { label: "Em Desenvolvimento", value: "development" },
     { label: "Revisão", value: "review" },
@@ -43,39 +42,45 @@ const projectStatusOptions: SelectOption[] = [
     { label: "Pausado", value: "paused" },
 ];
 
-export function ProjectForm() {
-    const [formData, setFormData] = useState<ProjectFormData>({
-        clientName: "",
-        clientEmail: "",
-        clientPhone: "",
-        clientDocument: "",
-        clientProfession: "",
-        estimatedBudget: "",
-        stylePreference: "",
-        additionalNotes: "",
-        projectName: "",
-        projectType: "",
-        projectStatus: "",
-        totalArea: "",
-        fullAddress: "",
-        floors: "",
-        parkingSpaces: "",
-    });
+export const emptyProjectFormData: ProjectFormData = {
+    clientName: "",
+    clientEmail: "",
+    clientPhone: "",
+    clientDocument: "",
+    clientProfession: "",
+    estimatedBudget: "",
+    stylePreference: "",
+    additionalNotes: "",
+    projectName: "",
+    projectType: "",
+    projectStatus: "",
+    totalArea: "",
+    fullAddress: "",
+    floors: "",
+    parkingSpaces: "",
+};
 
+interface ProjectFormProps {
+    data: ProjectFormData;
+    onChange: (data: ProjectFormData) => void;
+    disabled?: boolean;
+}
+
+export function ProjectForm({ data, onChange, disabled = false }: ProjectFormProps) {
     const handleInputChange = (field: keyof ProjectFormData) => (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
-        setFormData(prev => ({
-            ...prev,
+        onChange({
+            ...data,
             [field]: e.target.value
-        }));
+        });
     };
 
     const handleSelectChange = (field: keyof ProjectFormData) => (value: string) => {
-        setFormData(prev => ({
-            ...prev,
+        onChange({
+            ...data,
             [field]: value
-        }));
+        });
     };
 
     return(
@@ -89,47 +94,54 @@ export function ProjectForm() {
                             <Input 
                                 label="Nome / Razão Social *" 
                                 placeholder="Arch Studio Pro LTDA"
-                                value={formData.clientName}
+                                value={data.clientName}
                                 onChange={handleInputChange('clientName')}
+                                propsInput={{ disabled }}
                             />
                             <Input 
                                 label="Email" 
                                 type="email"
                                 placeholder="contato@email.com"
-                                value={formData.clientEmail}
+                                value={data.clientEmail}
                                 onChange={handleInputChange('clientEmail')}
+                                propsInput={{ disabled }}
                             />
                             <Input 
                                 label="Telefone" 
                                 type="tel"
                                 placeholder="(11) 99999-9999"
-                                value={formData.clientPhone}
+                                value={data.clientPhone}
                                 onChange={handleInputChange('clientPhone')}
+                                propsInput={{ disabled }}
                             />
                             <Input 
                                 label="CPF / CNPJ" 
                                 placeholder="000.000.000-00"
-                                value={formData.clientDocument}
+                                value={data.clientDocument}
                                 onChange={handleInputChange('clientDocument')}
+                                propsInput={{ disabled }}
                             />
                             <Input 
                                 label="Profissão / Atividade" 
                                 placeholder="Arquiteto"
-                                value={formData.clientProfession}
+                                value={data.clientProfession}
                                 onChange={handleInputChange('clientProfession')}
+                                propsInput={{ disabled }}
                             />
                             <Input 
                                 label="Orçamento Estimado" 
                                 placeholder="R$ 10.000,00"
-                                value={formData.estimatedBudget}
+                                value={data.estimatedBudget}
                                 onChange={handleInputChange('estimatedBudget')}
+                                propsInput={{ disabled }}
                             />
                             <div className="sm:col-span-2">
                                 <Input 
                                     label="Preferência de Estilo" 
                                     placeholder="Moderno, Minimalista, Industrial..."
-                                    value={formData.stylePreference}
+                                    value={data.stylePreference}
                                     onChange={handleInputChange('stylePreference')}
+                                    propsInput={{ disabled }}
                                 />
                             </div>
                         </div>
@@ -137,8 +149,9 @@ export function ProjectForm() {
                             label="Observações Adicionais"
                             placeholder="Digite observações sobre o cliente ou projeto..."
                             rows={5}
-                            value={formData.additionalNotes}
+                            value={data.additionalNotes}
                             onChange={handleInputChange('additionalNotes')}
+                            disabled={disabled}
                         />
                     </div>
                 </div>
@@ -150,54 +163,59 @@ export function ProjectForm() {
                         <Input 
                             label="Nome do Projeto *"
                             placeholder="Residência Silva"
-                            value={formData.projectName}
+                            value={data.projectName}
                             onChange={handleInputChange('projectName')}
+                            propsInput={{ disabled }}
                         />
                         <Select 
                             label="Tipo *" 
                             options={projectTypeOptions}
                             placeholder="Selecione o tipo"
-                            value={formData.projectType}
+                            value={data.projectType}
                             onChange={handleSelectChange('projectType')}
-                            className="!bg-[#121417]"
+                            disabled={disabled}
                         />
                         <Select 
                             label="Status" 
                             options={projectStatusOptions}
                             placeholder="Selecione o status"
-                            value={formData.projectStatus}
+                            value={data.projectStatus}
                             onChange={handleSelectChange('projectStatus')}
-                            className="!bg-[#121417]"
+                            disabled={disabled}
                         />
                         <Input 
                             label="Área Total (m²)"
                             type="number"
                             placeholder="150"
-                            value={formData.totalArea}
+                            value={data.totalArea}
                             onChange={handleInputChange('totalArea')}
+                            propsInput={{ disabled }}
                         />
 
                         <div className="sm:col-span-2">
                             <Input 
                                 label="Endereço Completo"
                                 placeholder="Rua, Número, Bairro, Cidade - UF"
-                                value={formData.fullAddress}
+                                value={data.fullAddress}
                                 onChange={handleInputChange('fullAddress')}
+                                propsInput={{ disabled }}
                             />
                         </div>
                         <Input 
                             label="Pavimentos"
                             type="number"
                             placeholder="2"
-                            value={formData.floors}
+                            value={data.floors}
                             onChange={handleInputChange('floors')}
+                            propsInput={{ disabled }}
                         />
                         <Input 
                             label="Vagas de Garagem"
                             type="number"
                             placeholder="2"
-                            value={formData.parkingSpaces}
+                            value={data.parkingSpaces}
                             onChange={handleInputChange('parkingSpaces')}
+                            propsInput={{ disabled }}
                         />
                     </div>
                 </div>

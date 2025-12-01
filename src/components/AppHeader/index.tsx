@@ -6,7 +6,7 @@ import { PhotoProfile } from "../PhotoProfile";
 
 export function AppHeader() {
     return(
-        <header className="w-full h-20 bg-background border-b border-b-gray-900 flex items-center">
+        <header className="w-full h-20 bg-background border-b border-b-[#34373D] flex items-center">
             <Container>
                 <div className="flex items-center justify-between w-full">
                     <Logo  redirectTo={routes.dashboard}/>
