@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import type { ProjectPhase, Milestone } from "../../types/project";
+import type { ProjectPhase, Milestone, PhaseType } from "../../types/project";
 import { CardPhase } from "../CardPhase";
 import { calculatePhasesTimeline } from "../../utils/project";
 import Button from "../Button";
@@ -7,14 +7,16 @@ import { MdAdd } from "react-icons/md";
 
 interface ProjectPhasesProps {
     initialPhases?: ProjectPhase[];
+    typePhase: "PROJECT" | "CONSTRUCTION";
     projectStartDate: string;
     onPhasesChange?: (phases: ProjectPhase[]) => void;
 }
 
-export function ProjectPhases({ 
+export function TimelinePhases({ 
     initialPhases = [],
     projectStartDate,
-    onPhasesChange
+    onPhasesChange,
+    typePhase
 }: ProjectPhasesProps) {
     const [phases, setPhases] = useState<ProjectPhase[]>(initialPhases);
 
@@ -48,7 +50,7 @@ export function ProjectPhases({
             startDate: "",
             independentDate: "",
             phaseOrder: phases.length + 1,
-            phaseType: "PROJECT" as any,
+            phaseType: typePhase as PhaseType,
             milestones: []
         };
         updatePhases([...phases, newPhase]);
@@ -109,11 +111,16 @@ export function ProjectPhases({
         <main className="space-y-6">
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-xl font-semibold">Fases do Projeto</h1>
+                    <h1 className="text-xl font-semibold">{typePhase === "PROJECT" ? "Fases do Projeto" : "Fases da Obra"}</h1>
                     {phases.length > 0 && (
-                        <p className="text-sm text-[#9FA3AD] mt-1">
-                            Total: {phases.length} fase{phases.length !== 1 ? 's' : ''}
-                        </p>
+                        <div className="flex gap-4 items-center">
+                            <p className="text-sm text-[#9FA3AD] mt-1">
+                                Total: {phases.length} fase{phases.length !== 1 ? 's' : ''}
+                            </p>
+                            <p className="text-sm text-[#9FA3AD] mt-1">
+                                Duração total: {phases.reduce((sum, phase) => sum + phase.weeks, 0)} semana{phases.reduce((sum, phase) => sum + phase.weeks, 0) !== 1 ? 's' : ''}
+                            </p>
+                        </div>
                     )}
                 </div>
                 <Button onClick={handleAddPhase} size="sm">

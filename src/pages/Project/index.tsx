@@ -2,8 +2,8 @@ import { useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { HeaderProject } from "../../components/HeaderProject"
 import { ProjectForm, emptyProjectFormData, type ProjectFormData } from "../../components/ProjectForm";
-import { ProjectPhases } from "../../components/ProjectPhases";
-import { formatDate, PHASES_MOCK } from "../../utils/project";
+import { TimelinePhases } from "../../components/TimelinePhases";
+import {  PHASES_MOCK } from "../../utils/project";
 import { PhaseType } from "../../types/project";
 
 export default function Project() {
@@ -112,9 +112,10 @@ export default function Project() {
                 disabled={isSaving}
             /> 
 
-            <ProjectPhases 
+            <TimelinePhases 
                 projectStartDate={new Date().toISOString().split('T')[0]}
                 initialPhases={PHASES_MOCK.filter(phase => phase.phaseType === PhaseType.PROJECT)}
+                typePhase={PhaseType.PROJECT}
             /> 
         </div>
     )
