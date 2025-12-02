@@ -16,20 +16,20 @@ interface HeaderProjectProps {
 
 export function HeaderProject({ title, projectType, clientName, projectStatus, currentVersion, versions = [], changeVersion, saveProject, isSaving = false }: HeaderProjectProps) {
     return(
-        <header className="w-full h-20 bg-background flex items-center justify-between">
-            <div className="flex flex-col gap-4">
-                <h1 className="text-3xl font-semibold text-white">{title}</h1>
-                <div className="flex items-center gap-4">
-                    <span className="bg-background border border-[#34373D] rounded-full px-4 flex flex-col items-center justify-center">
-                        <p className="text-sm">{projectType}</p>
+        <header className="w-full min-h-20 bg-background flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 lg:gap-0 py-4 lg:py-0">
+            <div className="flex flex-col gap-2 lg:gap-4 w-full lg:w-auto">
+                <h1 className="text-2xl md:text-3xl font-semibold text-white truncate">{title}</h1>
+                <div className="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm">
+                    <span className="bg-background border border-[#34373D] rounded-full px-3 md:px-4 py-1 flex items-center justify-center">
+                        <p className="text-xs md:text-sm">{projectType}</p>
                     </span>
-                    <span>•</span>
-                    <p className="text-sm">Cliente: {clientName}</p>
-                    <span>•</span>
-                    <span className="border border-[#3b82f633] bg-[#3b82f61a] text-blue-500 rounded-full px-4 text-sm">{projectStatus}</span>
+                    <span className="hidden sm:inline">•</span>
+                    <p className="text-xs md:text-sm truncate max-w-[200px] md:max-w-none">Cliente: {clientName}</p>
+                    <span className="hidden sm:inline">•</span>
+                    <span className="border border-[#3b82f633] bg-[#3b82f61a] text-blue-500 rounded-full px-3 md:px-4 py-1 text-xs md:text-sm">{projectStatus}</span>
                 </div>
             </div>
-            <div className="flex items-center justify-center gap-4">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-3 md:gap-4 w-full lg:w-auto">
                 {
                     versions && versions.length > 0 && currentVersion && (
                         <Select

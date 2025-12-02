@@ -108,16 +108,16 @@ export function TimelinePhases({
     };
 
     return(
-        <main className="space-y-6">
-            <div className="flex items-center justify-between">
+        <main className="space-y-4 md:space-y-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
                 <div>
-                    <h1 className="text-xl font-semibold">{typePhase === "PROJECT" ? "Fases do Projeto" : "Fases da Obra"}</h1>
+                    <h1 className="text-lg md:text-xl font-semibold">{typePhase === "PROJECT" ? "Fases do Projeto" : "Fases da Obra"}</h1>
                     {phases.length > 0 && (
-                        <div className="flex gap-4 items-center">
-                            <p className="text-sm text-[#9FA3AD] mt-1">
+                        <div className="flex flex-wrap gap-2 md:gap-4 items-center">
+                            <p className="text-xs md:text-sm text-[#9FA3AD] mt-1">
                                 Total: {phases.length} fase{phases.length !== 1 ? 's' : ''}
                             </p>
-                            <p className="text-sm text-[#9FA3AD] mt-1">
+                            <p className="text-xs md:text-sm text-[#9FA3AD] mt-1">
                                 Duração total: {phases.reduce((sum, phase) => sum + phase.weeks, 0)} semana{phases.reduce((sum, phase) => sum + phase.weeks, 0) !== 1 ? 's' : ''}
                             </p>
                         </div>

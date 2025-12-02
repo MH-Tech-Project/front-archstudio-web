@@ -71,8 +71,8 @@ export function CardPhase({
     return (
         <Box>
             <div className="w-full space-y-4">
-                <div className="flex items-center justify-between gap-3">
-                    <div className="w-1/2 flex items-center gap-2">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                    <div className="w-full sm:w-1/2 flex items-center gap-2">
                         <div className="flex flex-col gap-0.5 cursor-move text-[#9FA3AD] hover:text-[#EFA339]">
                             <MdDragIndicator size={20} />
                         </div>
@@ -85,14 +85,14 @@ export function CardPhase({
                         />
                     </div>
 
-                    <div className="flex items-center gap-4">
-                        <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 md:gap-4 w-full sm:w-auto justify-end">
+                        <div className="flex items-center gap-1.5 md:gap-2">
                             <Checkbox
                                 id={`independent-${phase.id}`}
                                 checked={phase.isIndependent}
                                 onChange={(checked) => onUpdatePhase(phase.id, { isIndependent: checked })}
                             />
-                            <label htmlFor={`independent-${phase.id}`} className="text-xs text-[#9FA3AD] cursor-pointer whitespace-nowrap">
+                            <label htmlFor={`independent-${phase.id}`} className="text-[10px] md:text-xs text-[#9FA3AD] cursor-pointer whitespace-nowrap">
                                 Fase Independente
                             </label>
                         </div>
@@ -120,9 +120,9 @@ export function CardPhase({
                 {isExpanded && (
                     <div className="space-y-4">
                         {/* First Row: Dates and Weeks */}
-                        <div className="grid grid-cols-12 gap-3 items-end">
+                        <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-end">
                             {/* Start Date */}
-                            <div className="col-span-3">
+                            <div className="col-span-1 sm:col-span-3">
                                 <label className="text-xs text-[#9FA3AD] mb-1 block">
                                     Início: {formatDate(displayStartDate)}
                                 </label>
@@ -138,14 +138,14 @@ export function CardPhase({
                             </div>
 
                             {/* End Date (Display only) */}
-                            <div className="col-span-3">
+                            <div className="col-span-1 sm:col-span-3">
                                 <label className="text-xs text-[#9FA3AD] mb-1 block">
                                     Término: {formatDate(endDate)}
                                 </label>
                             </div>
 
                             {/* Weeks Input */}
-                            <div className="col-span-1">
+                            <div className="col-span-1 sm:col-span-1">
                                 <Input
                                     label="Semanas"
                                     type="number"
@@ -156,7 +156,7 @@ export function CardPhase({
                             </div>
 
                             {/* Progress Bar */}
-                            <div className="col-span-4 flex flex-col gap-1">
+                            <div className="col-span-1 sm:col-span-4 flex flex-col gap-1">
                                 <div className="flex items-center justify-between">
                                     <span className="text-xs text-[#9FA3AD]">Progresso</span>
                                     <span className="text-xs font-medium text-foreground">

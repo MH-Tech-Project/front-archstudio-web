@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { HeaderProject } from "../../components/HeaderProject"
 import { ProjectForm, emptyProjectFormData, type ProjectFormData } from "../../components/ProjectForm";
 import { TimelinePhases } from "../../components/TimelinePhases";
-import {  PHASES_MOCK } from "../../utils/project";
-import { PhaseType } from "../../types/project";
+import { GanttChart } from "../../components/GanttChart";
+import { PHASES_MOCK, calculatePhasesTimeline } from "../../utils/project";
+import { PhaseType, type ProjectPhase } from "../../types/project";
 
 export default function Project() {
     const { id } = useParams<{ id: string }>()
@@ -14,13 +15,27 @@ export default function Project() {
     const [formData, setFormData] = useState<ProjectFormData>(emptyProjectFormData);
     const [isLoading, setIsLoading] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
+    const [projectPhases, setProjectPhases] = useState<ProjectPhase[]>(PHASES_MOCK.filter(phase => phase.phaseType === PhaseType.PROJECT));
+    const [constructionPhases, setConstructionPhases] = useState<ProjectPhase[]>(PHASES_MOCK.filter(phase => phase.phaseType === PhaseType.CONSTRUCTION));
 
     const [currentVersion, setCurrentVersion] = useState(3);
     const [versions] = useState([
-        { id: 1, date: "2025-10-15", author: "João Silva" },
+        { id: 1, date: "2025-10-15", author: "Matheus Oliveira" },
         { id: 2, date: "2025-10-20", author: "Maria Santos" },
-        { id: 3, date: "2025-10-25", author: "João Silva" },
+        { id: 3, date: "2025-10-25", author: "Higor Thome" },
     ]);
+
+    const projectStartDate = new Date().toISOString().split('T')[0];
+
+    const allPhases = useMemo(() => [
+        ...projectPhases,
+        ...constructionPhases
+    ], [projectPhases, constructionPhases]);
+
+    const fullTimeline = useMemo(() => 
+        calculatePhasesTimeline(allPhases, projectStartDate),
+        [allPhases, projectStartDate]
+    );
 
     useEffect(() => {
         if (isNewProject) {
@@ -69,7 +84,7 @@ export default function Project() {
                 const newId = "123"; // ID return from API after creation
                 console.log("Projeto criado:", formData);
                 
-                navigate(`/projects/${newId}`, { replace: true });
+                navigate(`/project/${newId}`, { replace: true });
             } else {
                 // await updateProject(id, formData);
                 console.log("Projeto atualizado:", formData);
@@ -93,7 +108,7 @@ export default function Project() {
     }
 
     return(
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-6 md:gap-8 lg:gap-10 px-4 md:px-6 lg:px-0">
             <HeaderProject 
                 title={isNewProject ? "Novo Projeto" : formData.projectName || "Projeto"}
                 projectType={formData.projectType}
@@ -113,9 +128,22 @@ export default function Project() {
             /> 
 
             <TimelinePhases 
-                projectStartDate={new Date().toISOString().split('T')[0]}
-                initialPhases={PHASES_MOCK.filter(phase => phase.phaseType === PhaseType.PROJECT)}
+                projectStartDate={projectStartDate}
+                initialPhases={projectPhases}
                 typePhase={PhaseType.PROJECT}
+                onPhasesChange={setProjectPhases}
+            /> 
+
+            <TimelinePhases 
+                projectStartDate={projectStartDate}
+                initialPhases={constructionPhases}
+                typePhase={PhaseType.CONSTRUCTION}
+                onPhasesChange={setConstructionPhases}
+            />
+
+            <GanttChart 
+                phases={fullTimeline}
+                projectStartDate={projectStartDate}
             /> 
         </div>
     )
